@@ -1,6 +1,7 @@
 `use strict`;
 
-const key = `здесь_должен_быть_ключ_с_сайта_weatherapi.com`;
+//const key = `здесь_должен_быть_ключ_с_сайта_weatherapi.com`;
+const key = `a2c17bf87a8646f5aad191158211004`;
 
 const btn = document.querySelector(".btn-country");
 const countriesContainer = document.querySelector(".countries");
@@ -72,7 +73,7 @@ function getCountryData(country) {
       countriesContainer.style.opacity = 1;
     });
 }
-
+/* 
 function getNameCountryByCoords() {
   navigator.geolocation.getCurrentPosition(async function (location) {
     const latitude = location.coords.latitude;
@@ -86,6 +87,25 @@ function getNameCountryByCoords() {
     
     getCountryData(`${data.country}`);
   });
+}
+ */
+
+function getNameCountryByCoords() {
+  new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  })
+    .then(function (location) {
+      // console.log(location);
+      const latitude = location.coords.latitude;
+      const longitude = location.coords.longitude;
+      fetch(
+        `http://api.weatherapi.com/v1/search.json?key=${key}&q=${latitude},${longitude}`
+      )
+        .then((response) => response.json())
+        .then(([data]) => getCountryData(`${data.country}`))
+        .catch((err) => renderError(err.message));
+    })
+    .catch((err) => renderError(err.message));
 }
 
 btn.addEventListener(`click`, function () {
