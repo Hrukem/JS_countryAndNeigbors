@@ -1,6 +1,6 @@
 `use strict`;
 
-const key = `a2c17bf87a8646f5aad191158211004`;
+const key = `здесь_должен_быть_ключ_с_сайта_weatherapi.com`;
 
 const btn = document.querySelector(".btn-country");
 const countriesContainer = document.querySelector(".countries");
